@@ -18,9 +18,11 @@ async def find_all_stock():
 async def find_one_stock_id(id):
     return stockEntity(conn.local.stock.find_one({"_id": ObjectId(id)}))
 
-''' #get stock by name
-@stock.get('/')
-'''
+
+@stock.get('/name/{name}')
+async def find_one_stock_name(name):
+    return stockEntity(conn.local.stock.find_one({"name": name}))
+
 
 @stock.post('/')
 async def create_stock(stock: Stock):
@@ -38,10 +40,14 @@ async def update_stock(id, stock: Stock):
 async def delete_stock(id):
     return stockEntity(conn.local.stock.find_one_and_delete({"_id": ObjectId(id)}))
 
+@stock.post('/update_stock_data')
+async def update_stock_data(): # TODO per stock or all stock
+    pass
+
 @stock.post('/create_default_data')
 async def create_default_data():
     all_ticker = []
-
+    
     for file_name in ['nasdaqlisted.txt', 'otherlisted.txt']:
         all_data = open(f'files/{file_name}', 'r')
         for line in all_data:
@@ -51,9 +57,10 @@ async def create_default_data():
                 all_ticker.append(ticker)
     print(len(all_ticker))
 
+    # Testing
+    all_ticker = ['aapl', 'zm']
+
     for ticker in all_ticker:
-        # ticker_aapl.info['sector']
-        # ticker_aapl.info['website'] 
         ticker_obj = yf.Ticker(ticker)
         stock_data = yf.download(ticker, period = '7d', interval = '1m')
         # TODO would grab data from indicator database for creating all the data
@@ -64,10 +71,8 @@ async def create_default_data():
         
         category = 'N/A'
         link = 'N/A'
-        if 'sector' in ticker_obj.info:
-            category = ticker_obj.info['sector']
-        if 'website' in ticker_obj.info:
-            link = ticker_obj.info['website']
+        if 'sector' in ticker_obj.info: category = ticker_obj.info['sector']
+        if 'website' in ticker_obj.info: link = ticker_obj.info['website']
         stock_data.index = stock_data.index.astype(str)
         conn.local.stock.insert_one({
             'name': ticker,

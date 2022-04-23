@@ -1,3 +1,5 @@
 yfinance
 fastapi
 stockstats
+pymongo
+uvicorn

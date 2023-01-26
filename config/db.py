@@ -1,3 +1,3 @@
 from pymongo import MongoClient
-
-conn = MongoClient("mongodb://localhost:27017/test")
+import certifi
+conn = MongoClient("mongodb+srv://Admin:test_admin@cluster0.kghzn8n.mongodb.net/test", tlsCAFile=certifi.where()) #TODO: ISSUE

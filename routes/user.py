@@ -29,7 +29,7 @@ async def find_all_user():
 @user.get('/{id}')
 async def find_one_user(id):
     try:
-        response_data = userEntity(conn.project.user.find_one({'_id': ObjectId(id)}))
+        response_data = userEntity(conn.project.user.find_one({'_id': id}))
         response = {
             "Status": "Successful",
             "Payload": response_data
@@ -51,7 +51,7 @@ async def create_user(create_data_payload: create_user_payload):
     try:
         create_data = dict(create_data_payload)
         user = {
-            "_id": ObjectId(create_data["firebase_id"]),
+            "_id": create_data["firebase_id"],
             "first_name": None,
             "last_name": None,
             "nick_name": create_data["nick_name"],
@@ -78,10 +78,10 @@ async def create_user(create_data_payload: create_user_payload):
 @user.put('/{id}')
 async def update_user(id, user: User):
     try:
-        conn.project.user.find_one_and_update({"_id": ObjectId(id)}, {
+        conn.project.user.find_one_and_update({"_id": id}, {
             "$set":dict(user)
         })
-        response_data = userEntity(conn.project.user.find_one({"_id": ObjectId(id)}))
+        response_data = userEntity(conn.project.user.find_one({"_id": id}))
         response = {
             "Status": "Successful",
             "Payload": response_data
@@ -102,7 +102,7 @@ async def delete_user(id):
     try:
         return {
             "Status": "Successful",
-            "Payload": userEntity(conn.project.user.find_one_and_delete({"_id": ObjectId(id)}))
+            "Payload": userEntity(conn.project.user.find_one_and_delete({"_id": id}))
         }
     except Exception as e:
         return {

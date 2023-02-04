@@ -52,11 +52,11 @@ async def create_user(create_data_payload: create_user_payload):
         create_data = dict(create_data_payload)
         user = {
             "_id": create_data["firebase_id"],
-            "first_name": None,
-            "last_name": None,
+            "first_name": '',
+            "last_name": '',
             "nick_name": create_data["nick_name"],
             "email": create_data["email"],
-            "phone_number": None,
+            "phone_number": '',
             "cookie_number": 0,
             "result_list": [],
             "fav_stock": [],

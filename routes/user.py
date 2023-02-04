@@ -51,7 +51,7 @@ async def create_user(create_data_payload: create_user_payload):
     try:
         create_data = dict(create_data_payload)
         user = {
-            "_id": create_data["firebase_id"],
+            "_id": ObjectId(create_data["firebase_id"]),
             "first_name": None,
             "last_name": None,
             "nick_name": create_data["nick_name"],

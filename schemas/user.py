@@ -3,8 +3,11 @@ def userEntity(item) -> dict:
         "id": str(item["_id"]),
         "first_name": item["first_name"],
         "last_name": item["last_name"],
+        "nick_name": item["nick_name"],
         "email": item["email"],
-        "password": item["password"],
+        "phone_number": item["phone_number"],
+        "cookie_number": item["cookie_number"],
+        "result_list": item["result_list"],
         "fav_stock": item["fav_stock"],
         "strategy": item["strategy"]
     }

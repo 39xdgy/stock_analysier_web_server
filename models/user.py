@@ -5,7 +5,7 @@ class User(BaseModel):
     last_name: str
     nick_name: str
     email:str 
-    phone:str
+    phone_number:str
     cookie_number: int
     result_list: list
     fav_stock: list
